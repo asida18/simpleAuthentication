@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<head>
+    <title></title>
+
+  
+<!--    <script src="/assets/js/user.js"></script>  -->
+    <script>
+        function login(){
+            var loginButton = document.getElementById('loginButton');
+             
+            loginButton.addEventListener('click',function(){
+                console.log('Login button clicked');
+                 
+                var username = document.getElementById('loginName').value;
+                var password = document.getElementById('loginPassword').value;
+
+                var xhr = new XMLHttpRequest();
+                if (username && password) {
+
+                    xhr.open('POST', '/login', true);
+                        xhr.onload = function (e) {
+                            if (this.status === 200) {
+                                console.log(this.responseText);
+                                window.location = '/profile';
+                            }
+                        };
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhr.send("username=" + username + "&password=" + password);
+                }
+
+                else {
+                    alert("A username and password is required");
+                }
+
+            });
+        }
+        
+        
+        function signup(){
+            var signupButton = document.getElementById('signupButton');
+             
+            signupButton.addEventListener('click',function(){
+                console.log('Signup button clicked');
+                 
+                var username = document.getElementById('signupName').value;
+                var password = document.getElementById('signupPassword').value;
+                var confirmPassword = document.getElementById('signupConfirmPassword').value;
+
+                var xhr = new XMLHttpRequest();
+                if (username && password) {
+                    if(password === confirmPassword){
+                        xhr.open('POST', '/signup', true);
+                            xhr.onload = function (e) {
+                                if (this.status === 200) {
+                                    console.log(this.responseText);
+                                    window.location = '/profile';
+                                }
+                            };
+                            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                            xhr.send("username=" + username + "&password=" + password);
+//                            window.location = '/profile';
+                    } else {
+                        alert("Passwords don't match");
+                    }   
+                }
+                    else {
+                        alert("A username and password is required");
+                    }   
+            });
+        }
+        
+        function logout(){
+            var logoutButton = document.getElementById('logoutButton');
+            logoutButton.addEventListener('click',function(){
+                console.log('Logout button clicked!');
+                window.location = '/logout';
+            });
+        }
+        
+        function start(){
+            login();
+            signup();
+            logout();
+        }
+        window.onload = start;              
+    </script>
+</head>
+
+<body>
+    <h1>JourneyBlog</h1>
+    <div>
+        <h3>Login</h3>
+        <input type="text" id="loginName" placeholder="name" />
+        <input type="password" id="loginPassword" placeholder="password" />
+        <button id="loginButton">Login</button>
+    </div>
+    <div>
+        <h3>Signup</h3>
+        <input type="text" id="signupName" placeholder="name" />
+        <input type="password" id="signupPassword" placeholder="password" />
+        <input type="password" id="signupConfirmPassword" placeholder="confirm password" />
+        <button id="signupButton">Signup</button>
+    </div>
+    
+</body>
+
